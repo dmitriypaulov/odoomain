@@ -13,3 +13,5 @@ Result:
 ['|', '&', ('EXPRESSION',), ('EXPRESSION',), '|', ('EXPRESSION',), ('EXPRESSION',), '|', ('EXPRESSION',)]
 Code above was copied to clipboard!
 ```
+
+Also you can use standalone Windows executable from **dist/** directory
