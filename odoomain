@@ -1,0 +1,60 @@
+import sys
+import pyperclip
+from boolean_parser import parse
+from boolean_parser.actions.boolean import BoolAnd, BoolOr, BaseBool
+from boolean_parser.actions.clause import Condition
+
+
+dummy_expr = ("EXPRESSION",)
+operators_map = {
+    BoolAnd: "&",
+    BoolOr: "|",
+}
+
+def parse_operator(operator):
+    domain = []
+    counter = 0
+    domain.append(operators_map[type(operator)])
+    additional_operators = len(operator.conditions) > 2
+
+    for index, condition in enumerate(operator.conditions):
+
+        counter += 1
+        if isinstance(condition, BaseBool):
+            domain.extend(parse_operator(condition))
+
+        elif isinstance(condition, Condition):
+            domain.append(dummy_expr)
+
+        last_condition = index == len(operator.conditions) - 1
+        if counter % 2 == 0 and additional_operators and not last_condition:
+            domain.append(operators_map[type(operator)])
+
+    return domain
+
+def _parse(expression):
+    domain = []
+
+    if isinstance(expression, Condition):
+        domain.append(dummy_expr)
+
+    if isinstance(expression, BaseBool):
+        domain.extend(parse_operator(expression))
+
+    return domain
+
+if __name__ == "__main__":
+    arguments = sys.argv
+
+    # non-binary exception (because of 'python' command prefix)
+    if "odoomain" in arguments:
+        arguments.remove("odoomain")
+
+    # if the expression specified with dummy logical chain,
+    # let's convert it to something readable for the parser
+    expression = arguments[0].replace("?", "x == 0")
+    domain = repr(_parse(parse(expression, base="base")))
+    pyperclip.copy(domain)
+
+    print(domain)
+    print('\033[96mCode above was copied to clipboard!\033[0m')
