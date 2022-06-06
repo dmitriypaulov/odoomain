@@ -10,7 +10,7 @@ odoomain "(? and ?) or (? or ? or ?)"
 
 Result:
 ```sh
-['|', '&', ('EXPRESSION',), ('EXPRESSION',), '|', ('EXPRESSION',), ('EXPRESSION',), '|', ('EXPRESSION',)]
+['|', '&', ('EXPRESSION',), ('EXPRESSION',), '|', ('EXPRESSION',), '|', ('EXPRESSION',), ('EXPRESSION',)]
 Code above was copied to clipboard!
 ```
 

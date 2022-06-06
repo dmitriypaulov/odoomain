@@ -24,8 +24,8 @@ def parse_operator(operator):
         elif isinstance(condition, Condition):
             domain.append(dummy_expr)
 
-        last_condition = index == len(operator.conditions) - 1
-        if (index + 1) % 2 == 0 and additional_operators and not last_condition:
+        last_conditions = index >= len(operator.conditions) - 2
+        if additional_operators and not last_conditions:
             domain.append(operators_map[type(operator)])
 
     return domain
